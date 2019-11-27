@@ -1,1 +1,3 @@
 # iota-examples
+
+- getNodeInfo.py
