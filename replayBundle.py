@@ -1,0 +1,8 @@
+from iota import Iota
+from config import NODE_URL
+import json
+
+TXN_HASH = "XHADQXMPFWJCFCLZOVFYRFDQCNFLJFKVDRLCDACAOQBBQMMOUIVTPLASLOQAFRC9MUSUEFWPZJRMZ9999"
+
+api = Iota(NODE_URL)
+print(api.replay_bundle(TXN_HASH))
