@@ -11,13 +11,6 @@ def bin2hex(bin_str):
 def hex2bin(hex_str):
     return binascii.unhexlify(hex_str)
 
-def gen_key_pair():
-    key = RSA.generate(1024)
-    public_key = key.publickey().exportKey('PEM').decode('ascii')
-    private_key = key.exportKey('PEM').decode('ascii')
-
-    return public_key, private_key
-
 def encrypt_with_pub_key(pub_key, data):
     publickey = RSA.importKey(pub_key)
     encryptor = PKCS1_OAEP.new(publickey)
@@ -30,21 +23,8 @@ def encrypt_with_pub_key(pub_key, data):
 
     return encrypted
 
-def decrypt_with_pri_key(user, data):
-    # Decrypt
-    private_key = ""
-    decrypted = "" 
-    with open("accounts/" + user + "/private.pem", 'r') as outfile:
-        private_key = outfile.read()
+pub_key = "-----BEGIN PUBLIC KEY-----\nMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCunuuu5cVa25eTtq0t+cnHpm4O\n6w2Tsklazr7dWrIy4RiqiUvcgyYKkPsb/THj7/rfGysgsqa0nA2NYtzhOPHWPW0Q\n0sEAyM0A7gvtLhxFje3hMpd+tkkSKSQFOCqh0+2jZJc6idFavuBGoZXkg4cGEkGe\nY3dxD6yVpUdEbEx/GwIDAQAB\n-----END PUBLIC KEY-----"
 
-    privatekey = RSA.importKey(private_key)
-    decryptor = PKCS1_OAEP.new(privatekey)
+cyphertext = encrypt_with_pub_key(pub_key, "123")
 
-    # Convert string to byte
-    encrypted = data.encode('ascii')
-    
-    # Hex to bin
-    encrypted = hex2bin(encrypted)
-    decrypted = decryptor.decrypt(encrypted)
-
-    return decrypted.decode()
+print(cyphertext)
